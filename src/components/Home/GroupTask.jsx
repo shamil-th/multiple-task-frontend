@@ -3,7 +3,7 @@ import TaskInput from "./TaskInput";
 import { useDispatch } from "react-redux";
 import { setSingleInput } from "../../features/taskSlice";
 
-const GroupTask = ({singleInput,index}) => {
+const GroupTask = ({ singleInput, index }) => {
   const [inputRow, setInputRow] = useState([
     {
       subtask: "",
@@ -27,14 +27,20 @@ const GroupTask = ({singleInput,index}) => {
     setInputRow(updatedInputRow);
   };
 
-
   let dispatch = useDispatch();
 
-  const updateGtask = (value) => {
+  const updateGtask = () => {
     const updatedData = [...singleInput];
-    const singleTask = updatedData[index];
-    dispatch(setSingleInput(updatedData))
-  }
+    console.log("updatedData", updatedData);
+    // const singleTask = [...updatedData[index].task];
+    // const taskGroup = [singleTask, inputRow];
+    updatedData[index] = {
+      ...updatedData[index],
+      task: inputRow,
+    };
+    // console.log("single", taskGroup);
+    dispatch(setSingleInput(updatedData));
+  };
   // Update inputRow state with new value
   const inputChange = (index, value) => {
     const updatedInputRow = inputRow.map((task, i) => {
@@ -44,19 +50,18 @@ const GroupTask = ({singleInput,index}) => {
       return task;
     });
     setInputRow(updatedInputRow);
-  
+
     setTimeout(() => {
       // console.log(inputRow)
       updateGtask(value);
-      
-      // setSingleInput[index] = 
+
+      // setSingleInput[index] =
       // dispatch(setSingleInput())
     }, 500);
   };
-  useEffect(() =>{
-    console.log(inputRow)
-
-  },[inputRow])
+  useEffect(() => {
+    console.log(inputRow);
+  }, [inputRow]);
 
   return (
     <div>

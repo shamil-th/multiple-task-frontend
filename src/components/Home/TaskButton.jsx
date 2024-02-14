@@ -2,19 +2,20 @@ import React, { useState } from "react";
 import Style from "./Home.module.css";
 import PinModal from "./PinModal";
 
-const TaskButton = ({ setModal,saveTask }) => {
-  const [pinModal,setPinModal] = useState(false);
+const TaskButton = ({ setModal }) => {
+  const [pinModal, setPinModal] = useState(false);
+
   const showModal = () => {
     setModal(true);
   };
   const pinmodal = () => {
-    setPinModal(true)
-  }
+    setPinModal(true);
+  };
   return (
     <div className={Style.buttons}>
       <button onClick={showModal}>Add Task</button>
       <button onClick={pinmodal}>Save</button>
-      {pinModal&&<PinModal saveTask={saveTask} setPinModal={setPinModal} />}
+      {pinModal && <PinModal setPinModal={setPinModal} />}
     </div>
   );
 };

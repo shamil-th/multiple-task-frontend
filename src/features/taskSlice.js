@@ -3,6 +3,7 @@ import axios from "axios";
 
 // add new task
 export const createTask = createAsyncThunk("taskSlice/createTask", async (data) => {
+  console.log('final',data)
   const response = await axios.post("http://localhost:4000", data);
   if (!response.data) {
     throw new Error("coudlnot add task");
@@ -36,7 +37,9 @@ const initialState = {
   tasklist: [],
   task: [],
   status: [],
-  singleInput:[{pin:"",taskTitle:"",list:[]}]
+  singleInput:[],
+  allTask:[]
+
 };
 
 const taskSlice = createSlice({
@@ -45,8 +48,12 @@ const taskSlice = createSlice({
   reducers: {
     setSingleInput:(state,action) => {
       state.singleInput = action.payload;
-      console.log('singleInput',state.singleInput)
+      console.log('list',state.singleInput)
     },
+    setAllTask:(state,action) => {
+      state.allTask = action.payload
+      console.log('alltask',state.allTask)
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -64,5 +71,5 @@ const taskSlice = createSlice({
   },
 });
 
-export const {setSingleInput} = taskSlice.actions
+export const {setSingleInput,setAllTask} = taskSlice.actions
 export default taskSlice.reducer;

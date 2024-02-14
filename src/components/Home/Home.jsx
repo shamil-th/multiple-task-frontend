@@ -8,10 +8,11 @@ import { setSingleInput } from "../../features/taskSlice";
 
 const Home = () => {
   const singleInput = useSelector((state) => state.tasklist.singleInput);
-  console.log(singleInput)
+  const [taskTitle,setTaskTitle] = useState('');
+
   let dispatch = useDispatch();
+
   const [modal, setModal] = useState(false);
-  // const [singleInput, setSingleInput] = useState([ ]);
 
   const addSingleTask = (data) => {
     const { title, type } = data;
@@ -25,15 +26,12 @@ const Home = () => {
   
     dispatch(setSingleInput([...singleInput,updatedData]));
   };
-  const saveTask = () => {
-
-  }
   return (
     <div className="container">
       <h1>Task List</h1>
       <div className={Style.input_area}>
-        <InputForm singleInput={singleInput}/>
-        <TaskButton setModal={setModal} saveTask={saveTask} />
+        <InputForm singleInput={singleInput} setTaskTitle={setTaskTitle} taskTitle={taskTitle}/>
+        <TaskButton setModal={setModal} />
       </div>
       {modal && <TaskModal setModal={setModal} addSingleTask={addSingleTask} />}
     </div>
