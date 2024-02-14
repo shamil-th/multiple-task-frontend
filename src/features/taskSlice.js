@@ -26,7 +26,7 @@ export const taskListCollecton = createAsyncThunk(
 
 // retrive single task
 export const singleTask = createAsyncThunk("taskSlice/singleTask", async (id) => {
-  const response = await axios.get(`http://localhost:4000)/${id}`);
+  const response = await axios.get(`http://localhost:4000/${id}`);
   if (!response.data) {
     throw new Error("coudlnot add task");
   }
@@ -60,14 +60,23 @@ const taskSlice = createSlice({
       .addCase(createTask.fulfilled, (state) => {
         state.status = "success";
       })
+      .addCase(createTask.rejected, (state) => {
+        state.status = "failed";
+      })
       .addCase(taskListCollecton.fulfilled, (state, action) => {
         state.status = "success";
         state.tasklist = action.payload;
       })
+      .addCase(taskListCollecton.rejected, (state) => {
+        state.status = "failed";
+      })
       .addCase(singleTask.fulfilled, (state, action) => {
-        state.status = "success";
+        state.status = "succeeded";
         state.task = action.payload;
-      });
+      })
+      .addCase(singleTask.rejected, (state) => {
+        state.status = "failed";
+      })
   },
 });
 

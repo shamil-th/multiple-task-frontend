@@ -1,0 +1,21 @@
+.task_form{
+    border: 1px solid #f0f0f0;;
+    padding: 20px;
+    border-radius: 5px;
+    width: 80%;
+}
+.task_form h1{
+    text-align: center;
+}
+.task_box{
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.subtask_box{
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}

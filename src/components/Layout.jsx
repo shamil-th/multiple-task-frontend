@@ -9,7 +9,7 @@ const Layout = () => {
     <Routes>
         <Route path='/' element={<Home/>} />
         <Route path='/tasklist' element={<TaskList/>} />
-        <Route path='task/' element={<Task/>} />
+        <Route path='task/:id' element={<Task/>} />
     </Routes>
   )
 }

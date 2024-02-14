@@ -20,27 +20,28 @@ const GroupTask = ({ singleInput, index }) => {
     setInputRow([...inputRow, newField]);
   };
 
+
+  
+  let dispatch = useDispatch();
+
+  const updateGtask = () => {
+    const updatedData = [...singleInput];
+    updatedData[index] = {
+      ...updatedData[index],
+      task: inputRow,
+    };
+    dispatch(setSingleInput(updatedData));
+  };
+
+  
   //   remove one input field
   const handleRemoveOne = (index) => {
     const updatedInputRow = [...inputRow];
     updatedInputRow.splice(index, 1);
     setInputRow(updatedInputRow);
+    updateGtask();
   };
 
-  let dispatch = useDispatch();
-
-  const updateGtask = () => {
-    const updatedData = [...singleInput];
-    console.log("updatedData", updatedData);
-    // const singleTask = [...updatedData[index].task];
-    // const taskGroup = [singleTask, inputRow];
-    updatedData[index] = {
-      ...updatedData[index],
-      task: inputRow,
-    };
-    // console.log("single", taskGroup);
-    dispatch(setSingleInput(updatedData));
-  };
   // Update inputRow state with new value
   const inputChange = (index, value) => {
     const updatedInputRow = inputRow.map((task, i) => {
@@ -50,18 +51,11 @@ const GroupTask = ({ singleInput, index }) => {
       return task;
     });
     setInputRow(updatedInputRow);
-
     setTimeout(() => {
-      // console.log(inputRow)
-      updateGtask(value);
-
-      // setSingleInput[index] =
-      // dispatch(setSingleInput())
+      updateGtask();
     }, 500);
+  
   };
-  useEffect(() => {
-    console.log(inputRow);
-  }, [inputRow]);
 
   return (
     <div>

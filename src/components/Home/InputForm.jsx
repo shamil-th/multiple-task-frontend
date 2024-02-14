@@ -17,10 +17,10 @@ dispatch(setAllTask({...allTask,taskTitle:taskTitle}))
       <input type="text" value={taskTitle} placeholder="enter collection name" onChange={(e)=>setTaskTitle(e.target.value)} />
       {singleInput && singleInput.map((task, index) => (
         <React.Fragment key={index}>
-          {task.tasktype === "task" && (
+          {task.type === "task" && (
             <SingleTask task={task} singleInput={singleInput} index={index} />
           )}
-          {task.tasktype === "group" && (
+          {task.type === "group" && (
             <div key={index}>
               <h1>{task.title}</h1>
               <GroupTask index={index} singleInput={singleInput} />

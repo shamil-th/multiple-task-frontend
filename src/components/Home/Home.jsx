@@ -19,9 +19,9 @@ const Home = () => {
     let updatedData;
   
     if (type === 'task') {
-      updatedData = { title: title, task: "", completed: false, tasktype: type };
+      updatedData = { title: title, task: "", completed: false, type: type };
     } else if (type === 'group') {
-      updatedData = { title: title, task: [], completed: false, tasktype: type };
+      updatedData = { title: title, task: [], completed: false, type: type };
     }
   
     dispatch(setSingleInput([...singleInput,updatedData]));
