@@ -9,7 +9,8 @@ import Style from "./Task.module.css";
 const Task = () => {
   const task = useSelector((state) => state.tasklist.task);
   const status = useSelector((state) => state.tasklist.status);
-  const [newList, setNewList] = useState();
+  const [newList, setNewList] = useState([]);
+  console.log('newlist',newList);
 
   useEffect(() => {
     setNewList(task.list);
@@ -59,7 +60,7 @@ const Task = () => {
                   newList={newList}
                 />
               )
-            )}{" "}
+            )}
           </>
         )}
         <div className={Style.buttons}>
