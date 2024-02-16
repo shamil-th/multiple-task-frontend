@@ -4,13 +4,11 @@ import SubTask from "./SubTask";
 
 const GroupTaskInfo = ({ item, index, newList, setNewList }) => {
   const [isItem, setIsItem] = useState(item.task);
-  console.log("task", newList?.[index]);
   useEffect(() => {
     if (newList) {
       const updateList = [...newList];
       updateList[index] = { ...updateList[index], task: isItem };
       setNewList(updateList);
-      console.log("updatelist", updateList);
     }
   }, [isItem]);
 

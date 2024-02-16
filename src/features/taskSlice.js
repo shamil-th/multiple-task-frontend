@@ -5,7 +5,6 @@ import axios from "axios";
 export const createTask = createAsyncThunk(
   "taskSlice/createTask",
   async (data) => {
-    console.log("final", data);
     try {
       const response = await axios.post("http://localhost:4000", data);
       if (!response.data) {
@@ -56,7 +55,6 @@ export const updateTaskStatus = createAsyncThunk(
   async (data) => {
     const id = data.id;
     const list = data.newList;
-    console.log("slice", list);
     try {
       const response = await axios.put(`http://localhost:4000/${id}`, list);
       if (!response.data) {
@@ -75,7 +73,7 @@ const initialState = {
   status: [],
   singleInput: [],
   allTask: [],
-  list: [],
+  // list: [],
 };
 
 const taskSlice = createSlice({
@@ -84,16 +82,13 @@ const taskSlice = createSlice({
   reducers: {
     setSingleInput: (state, action) => {
       state.singleInput = action.payload;
-      console.log("list", state.singleInput);
     },
     setAllTask: (state, action) => {
       state.allTask = action.payload;
-      console.log("alltask", state.allTask);
     },
-    setList: (state, action) => {
-      state.list = action.payload;
-      console.log("slice", state.list);
-    },
+    // setList: (state, action) => {
+    //   state.list = action.payload;
+    // },
   },
   extraReducers: (builder) => {
     builder
@@ -120,5 +115,5 @@ const taskSlice = createSlice({
   },
 });
 
-export const { setSingleInput, setAllTask, setList } = taskSlice.actions;
+export const { setSingleInput, setAllTask } = taskSlice.actions;
 export default taskSlice.reducer;

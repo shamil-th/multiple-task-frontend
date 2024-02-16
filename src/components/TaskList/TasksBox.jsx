@@ -1,11 +1,11 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import Style from "./TaskList.module.css";
+import PinConfirmation from "./PinConfirmation";
 
 const TasksBox = ({ task }) => {
-  let navigate = useNavigate();
+  const [confModal,setConfModal] = useState(false)
   const taskDetails = (id) => {
-    navigate(`/task/${id}`);
+    setConfModal(true)
   };
 
   return (
@@ -13,6 +13,7 @@ const TasksBox = ({ task }) => {
       <h1>{task.taskTitle}</h1>
       <p>Created on: {task.createdAt.slice(0,10)}</p>
       <button onClick={()=>taskDetails(task._id)}></button>
+      {confModal&&<PinConfirmation id={task._id} pin={task.pin} setConfModal={setConfModal}/>}
     </div>
   );
 };

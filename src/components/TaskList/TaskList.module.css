@@ -21,3 +21,10 @@
     border-radius: 5px;
     padding: 5px 10px;
 }
+.alert{
+    color: red;
+}
+.pin_buttons{
+display: flex;
+gap: 10px;
+}

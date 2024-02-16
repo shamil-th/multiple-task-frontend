@@ -8,7 +8,6 @@ const SingleTask = ({ task, index }) => {
   let dispatch = useDispatch();
   const [taskName, setTaskName] = useState("");
   const inputchange = (e) => {
-    console.log(index)
     const updatedData = [...singleInput];
     updatedData[index] = { ...updatedData[index], task: e.target.value };
     dispatch(setSingleInput(updatedData));

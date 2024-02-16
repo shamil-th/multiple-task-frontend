@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   createTask,
   setAllTask,
-  setSingleInput,
 } from "../../features/taskSlice";
 
 const PinModal = ({ setPinModal }) => {

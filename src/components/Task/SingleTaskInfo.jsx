@@ -2,7 +2,6 @@ import React from "react";
 import Style from "./Task.module.css";
 
 const SingleTaskInfo = ({ item, list, setNewList, index }) => {
-  // console.log(list);
   const complete = () => {
     const newList = [...list];
     if (newList[index].completed === true) {
