@@ -1,15 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Style from "./Task.module.css";
+import SubTask from "./SubTask";
 
-const GroupTaskInfo = ({ item }) => {
+const GroupTaskInfo = ({ item, index, newList, setNewList }) => {
+  // console.log("item",item);
+  const [isItem,setIsItem] = useState(item.task);
+  console.log("task",newList?.[index])
+  // console.log("list",list)
+  useEffect(()=>{
+    const updateList = {...newList};
+    // updateList[index] = {...updateList[index],task:isItem};
+    // setNewList(updateList)
+    console.log('updatelist',updateList) 
+  },[isItem])
+
+
   return (
     <div className={Style.task_box}>
       <h4>{item.title}</h4>
-      {item.task.map((subtask, index) => (
-        <div key={index} className={Style.subtask_box}>
-          <input type="checkbox" id={subtask.subtask} />
-          <label htmlFor={subtask.subtask}>{subtask.subtask}</label>
-        </div>
+      {isItem?.map((Itemsubtask, index) => (
+        <SubTask  key={index} index={index} setIsItem={setIsItem} isItem={isItem} Itemsubtask={Itemsubtask}/>
       ))}
     </div>
   );

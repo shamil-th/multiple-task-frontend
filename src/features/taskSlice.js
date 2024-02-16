@@ -2,58 +2,98 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 // add new task
-export const createTask = createAsyncThunk("taskSlice/createTask", async (data) => {
-  console.log('final',data)
-  const response = await axios.post("http://localhost:4000", data);
-  if (!response.data) {
-    throw new Error("coudlnot add task");
+export const createTask = createAsyncThunk(
+  "taskSlice/createTask",
+  async (data) => {
+    console.log("final", data);
+    try {
+      const response = await axios.post("http://localhost:4000", data);
+      if (!response.data) {
+        throw new Error("coudlnot add task");
+      }
+      return response.data;
+    } catch (error) {
+      console.error("internal server error", error);
+    }
   }
-  return response.data;
-});
-
+);
 
 // get tasklist
 export const taskListCollecton = createAsyncThunk(
   "taskSlice/taskListCollecton",
   async () => {
-    const response = await axios.get("http://localhost:4000");
-    if (!response.data) {
-      throw new Error("coudlnot add task");
+    try {
+      const response = await axios.get("http://localhost:4000");
+      if (!response.data) {
+        throw new Error("coudlnot add task");
+      }
+      return response.data;
+    } catch (error) {
+      console.error("internal server error", error);
     }
-    return response.data;
   }
 );
 
 // retrive single task
-export const singleTask = createAsyncThunk("taskSlice/singleTask", async (id) => {
-  const response = await axios.get(`http://localhost:4000/${id}`);
-  if (!response.data) {
-    throw new Error("coudlnot add task");
+export const singleTask = createAsyncThunk(
+  "taskSlice/singleTask",
+  async (id) => {
+    try {
+      const response = await axios.get(`http://localhost:4000/${id}`);
+      if (!response.data) {
+        throw new Error("coudlnot add task");
+      }
+      return response.data;
+    } catch (error) {
+      console.error("internal server error", error);
+    }
   }
-  return response.data;
-});
+);
+
+// update task status
+export const updateTaskStatus = createAsyncThunk(
+  "taskSlice/updateTaskStatus",
+  async (data) => {
+    const id = data.id;
+    const list = data.newList;
+    console.log("slice", list);
+    try {
+      const response = await axios.put(`http://localhost:4000/${id}`, list);
+      if (!response.data) {
+        throw new Error("could not update task");
+      }
+      return response.data;
+    } catch (error) {
+      console.error("internal server error", error);
+    }
+  }
+);
 
 const initialState = {
   tasklist: [],
   task: [],
   status: [],
-  singleInput:[],
-  allTask:[]
-
+  singleInput: [],
+  allTask: [],
+  list: [],
 };
 
 const taskSlice = createSlice({
   name: "tasklist",
   initialState,
   reducers: {
-    setSingleInput:(state,action) => {
+    setSingleInput: (state, action) => {
       state.singleInput = action.payload;
-      console.log('list',state.singleInput)
+      console.log("list", state.singleInput);
     },
-    setAllTask:(state,action) => {
-      state.allTask = action.payload
-      console.log('alltask',state.allTask)
-    }
+    setAllTask: (state, action) => {
+      state.allTask = action.payload;
+      console.log("alltask", state.allTask);
+    },
+    setList: (state, action) => {
+      state.list = action.payload;
+      console.log("slice", state.list);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -76,9 +116,9 @@ const taskSlice = createSlice({
       })
       .addCase(singleTask.rejected, (state) => {
         state.status = "failed";
-      })
+      });
   },
 });
 
-export const {setSingleInput,setAllTask} = taskSlice.actions
+export const { setSingleInput, setAllTask, setList } = taskSlice.actions;
 export default taskSlice.reducer;

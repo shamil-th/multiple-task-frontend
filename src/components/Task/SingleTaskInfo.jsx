@@ -1,14 +1,23 @@
-import React from 'react';
+import React from "react";
 import Style from "./Task.module.css";
 
-const SingleTaskInfo = ({item}) => {
+const SingleTaskInfo = ({ item, list, setNewList, index }) => {
+  // console.log(list);
+  const complete = () => {
+    const newList = [...list];
+    if (newList[index].completed === true) {
+      newList[index] = { ...newList[index], completed: false };
+    } else {
+      newList[index] = { ...newList[index], completed: true };
+    }
+    setNewList(newList);
+  };
   return (
-    <div  className={Style.task_box}>
-        {/* <h6>{item.title}</h6> */}
-        <input type="checkbox" id={item.task}/>
-        <label htmlFor={item.task}>{item.task}</label>
+    <div className={Style.task_box}>
+      <input type="checkbox" id={item.task} onChange={complete} checked={list?.[index]?.completed===true}/>
+      <label htmlFor={item.task}>{item.task}</label>
     </div>
-  )
-}
+  );
+};
 
-export default SingleTaskInfo
+export default SingleTaskInfo;

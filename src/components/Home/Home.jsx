@@ -5,6 +5,7 @@ import Style from "./Home.module.css";
 import TaskModal from "./TaskModal";
 import { useDispatch, useSelector } from "react-redux";
 import { setSingleInput } from "../../features/taskSlice";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const singleInput = useSelector((state) => state.tasklist.singleInput);
@@ -23,12 +24,19 @@ const Home = () => {
     } else if (type === 'group') {
       updatedData = { title: title, task: [], completed: false, type: type };
     }
-  
     dispatch(setSingleInput([...singleInput,updatedData]));
   };
+
+  let navigate = useNavigate();
+  const taskManager = () => {
+    navigate('/tasklist')
+  }
   return (
     <div className="container">
+      <div className={Style.header}>
       <h1>Task List</h1>
+      <a onClick={taskManager}>Task Manager</a>
+      </div>
       <div className={Style.input_area}>
         <InputForm singleInput={singleInput} setTaskTitle={setTaskTitle} taskTitle={taskTitle}/>
         <TaskButton setModal={setModal} />
