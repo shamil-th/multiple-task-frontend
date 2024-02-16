@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import TaskInput from "./TaskInput";
 import { useDispatch } from "react-redux";
 import { setSingleInput } from "../../features/taskSlice";
@@ -20,41 +20,40 @@ const GroupTask = ({ singleInput, index }) => {
     setInputRow([...inputRow, newField]);
   };
 
-
-  
   let dispatch = useDispatch();
 
-  const updateGtask = () => {
-    const updatedData = [...singleInput];
-    updatedData[index] = {
-      ...updatedData[index],
-      task: inputRow,
-    };
-    dispatch(setSingleInput(updatedData));
-  };
-
-  
-  //   remove one input field
+  // remove one input field
   const handleRemoveOne = (index) => {
-    const updatedInputRow = [...inputRow];
-    updatedInputRow.splice(index, 1);
-    setInputRow(updatedInputRow);
-    updateGtask();
+    setInputRow((prevInputRow) => {
+      const updatedInputRow = [...prevInputRow];
+      updatedInputRow.splice(index, 1);
+      updateGtask(updatedInputRow);
+      return updatedInputRow;
+    });
   };
 
   // Update inputRow state with new value
   const inputChange = (index, value) => {
-    const updatedInputRow = inputRow.map((task, i) => {
-      if (i === index) {
-        return { ...task, subtask: value };
-      }
-      return task;
+    setInputRow((prevInputRow) => {
+      const updatedInputRow = prevInputRow.map((task, i) => {
+        if (i === index) {
+          return { ...task, subtask: value };
+        }
+        return task;
+      });
+      updateGtask(updatedInputRow);
+      return updatedInputRow;
     });
-    setInputRow(updatedInputRow);
-    setTimeout(() => {
-      updateGtask();
-    }, 500);
-  
+  };
+
+  const updateGtask = (updatedInputRow) => {
+    const updatedData = [...singleInput];
+    updatedData[index] = {
+      ...updatedData[index],
+      task: updatedInputRow,
+    };
+
+    dispatch(setSingleInput(updatedData));
   };
 
   return (

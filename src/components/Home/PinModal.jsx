@@ -10,6 +10,7 @@ const PinModal = ({ setPinModal }) => {
   const allTask = useSelector((state) => state.tasklist.allTask);
   const singleInput = useSelector((state) => state.tasklist.singleInput);
   const [pin, setPin] = useState("");
+  const [alert,setAlert] = useState(false)
 
   const cancelPin = () => {
     setPinModal(false);
@@ -19,12 +20,18 @@ const PinModal = ({ setPinModal }) => {
     const newPin = e.target.value; 
     setPin(newPin); 
     dispatch(setAllTask({ ...allTask, pin: newPin, list: singleInput }));
+    setAlert(false);
   };
   
   let dispatch = useDispatch();
   const saveTask = () => {
-    dispatch(createTask(allTask));
-    setPinModal(false);
+    if(pin.length<4){
+      setAlert(true);
+    }
+else{
+  dispatch(createTask(allTask));
+  setPinModal(false);
+}
   };
   return (
     <div className="overlay">
@@ -38,6 +45,7 @@ const PinModal = ({ setPinModal }) => {
           placeholder="pin"
           onChange={(e) => pinNumber(e)}
         />
+        {alert&&<label htmlFor="pin" style={{color:'red'}}>*minimum 4 digit required</label>}
         <button className={Style.save} onClick={saveTask}>
           Save
         </button>
